@@ -8,8 +8,8 @@
     <body>
         <div class="main-div">
            <div class="music-container">
-               <h1 class="music-name">Music Name</h1>
-               <h3 class="artist">Artist</h3>
+               <h1 id="title">Music Name</h1>
+               <h3 id="artist">Artist</h3>
                <div class="img-container">
                    <img src="images/jyoti-1.jpeg" alt="" />
                </div>
@@ -19,7 +19,7 @@
                  <div class="music-controls">
                     <i class="fas fa-backward" id="previous" title="prev"></i>                  
                     <i class="fas fa-play main-button " id="play" title="play"></i>                  
-                    <i class="fas fa-forward" id="forword" title="next"></i>                   
+                    <i class="fas fa-forward" id="next" title="next"></i>                   
                  </div>
            </div>
         </div>
@@ -27,6 +27,33 @@
             const music = document.querySelector("audio");
             const img = document.querySelector("img");
             const play = document.getElementById("play");
+            const title = document.getElementById("title");
+            const artist = document.getElementById("artist");
+            const next = document.getElementById("next");
+            const previous = document.getElementById("previous");
+            
+            const songs =[
+               { 
+                    name: "jyoti-1",
+                    title: "Love-Mushup",
+                    artist:" A.R Rehman"
+                },
+                {
+                    name: "jyoti-2",
+                    title: "Galti Se Mistek",
+                    artist:"Anu Malik"
+                },
+                {
+                    name: "jyoti-3",
+                    title: "Love",
+                    artist:" Lata Mangeshkar"
+                },
+                {
+                    name: "jyoti-4",
+                    title: "Mushup",
+                    artist:" Asha Mangeshkar"
+                },
+                ];
 
             // play.addEventListener("click", ()=>{
             //     music.play();
@@ -61,9 +88,29 @@
                 play.classList.replace("fa-pause", "fa-play");
                 img.classList.remove("anime");
             };
+             const loadSong = (songs) =>{
+                title.textContent = songs.title;
+                artist.textContent = songs.artist;
+                music.src = "songs/" + songs.name + ".mp3";
+                img.src = "images/" + songs.name + ".jpeg";
+            }
+//              loadSong(songs[1]);
+             songIndex = 0;
+            const nextSong = () =>{
+                songIndex = (songIndex + 1)% songs.length;
+                 loadSong(songs[songIndex]);
+                playMusic();
+            }
+             const previousSong = () =>{
+                songIndex = (songIndex - 1 + songs.length) % songs.length;
+                 loadSong(songs[songIndex]);
+                playMusic();
+            }
+            
+            next.addEventListener("click", nextSong);
+            previous.addEventListener("click", previousSong);
 
-
-        
+    
         </script>
     </body>
 </html>
